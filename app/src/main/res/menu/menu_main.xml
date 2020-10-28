@@ -3,8 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.apmob.MainActivity">
     <item
+        android:id="@+id/main_menu_Login"
+        android:orderInCategory="5"
+        android:title="@string/mainmenu_login"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/newUser"
-        android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="10"
         android:title="@string/mainmenu_addUser"
         app:showAsAction="ifRoom" />
