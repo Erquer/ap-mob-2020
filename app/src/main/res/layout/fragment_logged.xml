@@ -7,14 +7,14 @@
     tools:context=".LoggedFragment"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/user_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/hello_blank_fragment"
-        android:textSize="18sp" />
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/logged_brainstorm_list"

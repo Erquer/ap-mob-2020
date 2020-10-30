@@ -1,10 +1,20 @@
 package com.example.apmob
 
+import android.content.ContentResolver
+import android.content.ContentValues
+import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.fragment_add_brainstorm.*
 import kotlinx.android.synthetic.main.fragment_logged.*
+import kotlinx.android.synthetic.main.fragment_main.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,6 +29,8 @@ private const val TAG = "LOGGED_FRAGMENT"
 class LoggedFragment : Fragment() {
     private var user: UserClass? = null
 
+    private val viewModel by lazy{ ViewModelProviders.of(requireActivity()).get(BrainstormViewModel::class.java)}
+    private val mAdapter = CursorRecyclerViewAdapter(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +38,13 @@ class LoggedFragment : Fragment() {
             user = it.getParcelable(ARG_PARAM1)
         }
 
+        viewModel.cursor.observe(this, Observer { cursor -> mAdapter.swapCursor(cursor)?.close() })
+
     }
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +52,15 @@ class LoggedFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        user_login?.text = user?.login
+
         return inflater.inflate(R.layout.fragment_logged, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        user_login?.text = user?.login
+        logged_brainstorm_list.layoutManager = LinearLayoutManager(context)
+        logged_brainstorm_list.adapter = mAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -50,10 +75,15 @@ class LoggedFragment : Fragment() {
             R.id.logout -> {
                 //logout user, back to main fragment.
                 Log.d(TAG,"onOptionsItemSelected: user logging out")
-                val newUser: UserClass? = null
                 val newFragment = MainActivityFragment()
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.main_fragment, newFragment)?.commit()
+            }
+            R.id.newBrainstorm->{
+                Log.d(TAG,"onOptionsItemSelected: user logging out")
+                val newFragment = AddBrainstorm.newInstance(user!!)
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.brainstorm_details_container, newFragment)?.commit()
             }
 
             R.id.myBrainstorms ->{
@@ -67,10 +97,12 @@ class LoggedFragment : Fragment() {
 
             }
         }
-
-
         return super.onOptionsItemSelected(item)
     }
+
+
+
+
 
     companion object {
         /**

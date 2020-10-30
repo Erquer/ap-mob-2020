@@ -12,6 +12,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:text="@string/no_brainstorm_text"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/showDetails"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,16 +25,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:text="@string/no_login_user"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/answers"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/showDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/brainstorm_title" />
 

@@ -43,11 +43,11 @@ class AppProvider : ContentProvider() {
         matcher.addURI(CONTENT_AUTHORITY, User.TABLE_NAME, USERS)
         matcher.addURI(CONTENT_AUTHORITY, "${User.TABLE_NAME}/#", USERS_ID)
 
-//        matcher.addURI(CONTENT_AUTHORITY, Brainstorm.TABLE_NAME, BRAINSTORMS)
-//        matcher.addURI(CONTENT_AUTHORITY, "${Brainstorm.TABLE_NAME}/#", BRAINSTORMS_ID)
-//
-//        matcher.addURI(CONTENT_AUTHORITY, Answer.TABLE_NAME, ANSWERS)
-//        matcher.addURI(CONTENT_AUTHORITY, "${Answer.TABLE_NAME}/#", ANSWERS_ID)
+        matcher.addURI(CONTENT_AUTHORITY, Brainstorm.TABLE_NAME, BRAINSTORMS)
+        matcher.addURI(CONTENT_AUTHORITY, "${Brainstorm.TABLE_NAME}/#", BRAINSTORMS_ID)
+
+        matcher.addURI(CONTENT_AUTHORITY, Answer.TABLE_NAME, ANSWERS)
+        matcher.addURI(CONTENT_AUTHORITY, "${Answer.TABLE_NAME}/#", ANSWERS_ID)
         return matcher
     }
 
@@ -183,8 +183,23 @@ class AppProvider : ContentProvider() {
             }
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
+        if(recordID > 0){
+            Log.d(TAG,"insert: Setting notifyChange with $uri")
+            context?.contentResolver?.notifyChange(uri,null)
+        }
+
+
         Log.d(TAG, "Exiting insert, returning $returnURI")
         return returnURI
+    }
+
+    override fun bulkInsert(uri: Uri, values: Array<out ContentValues>): Int {
+        var count = 0
+        for(value in values){
+            insert(uri,value)
+            count++
+        }
+        return count
     }
 
     override fun update(
@@ -261,6 +276,10 @@ class AppProvider : ContentProvider() {
 
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
+        if(count > 0){
+            Log.d(TAG,"update: Setting notifyChange with $uri")
+            context?.contentResolver?.notifyChange(uri,null)
+        }
         Log.d(TAG, "Exiting update, returning $count")
         return count
     }
@@ -332,6 +351,10 @@ class AppProvider : ContentProvider() {
             }
 
             else -> throw IllegalArgumentException("Unknown URI: $uri")
+        }
+        if(count > 0){
+            Log.d(TAG,"delete: Setting notifyChange with $uri")
+            context?.contentResolver?.notifyChange(uri,null)
         }
         Log.d(TAG, "Exiting delete, returning $count")
         return count

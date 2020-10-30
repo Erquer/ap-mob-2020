@@ -35,4 +35,8 @@
     <string name="loggedmenu_all">All Brainstorms</string>
     <string name="show_details_button">Details</string>
     <string name="Instruction_heading">Instructions</string>
+    <string name="new_brainstorm">New Brainstorm</string>
+    <string name="add_brainstorm_title">Title:</string>
+    <string name="add_brainstorm_answers">Pass the number of answers to generate</string>
+    <string name="add_brainstorm_addbutton">Add New Brainstorm</string>
 </resources>

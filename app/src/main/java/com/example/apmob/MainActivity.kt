@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.content_main.*
 
 private const val TAG = "MainActicity"
 
-class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginFragment.OnLoginClicked {
+class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginFragment.OnLoginClicked,AddBrainstorm.OnAddBrainstormClicked{
 
 
     //wherer or the activity is in 2-pane mode
@@ -77,6 +77,11 @@ class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginF
         val fragment = supportFragmentManager.findFragmentById(R.id.brainstorm_details_container)
         removeRegisterPane(fragment)
     }
+    override fun onAddBrainstormButtonClicked() {
+        Log.d(TAG,"addBrainstorm: starts")
+        val fragment = supportFragmentManager.findFragmentById(R.id.brainstorm_details_container)
+        removeRegisterPane(fragment)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,10 +105,14 @@ class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginF
                 removeRegisterPane(fragment)
             }
 
+
+
         }
         return super.onOptionsItemSelected(item)
 
     }
+
+
 
     private fun userAddRequest(user: UserClass?) {
         Log.d(TAG, "userAddRequest: starts")
@@ -165,5 +174,7 @@ class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginF
         Log.d(TAG, "onDestroy: called")
         super.onDestroy()
     }
+
+
 
 }

@@ -5,6 +5,12 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/newBrainstorm"
+        android:icon="@android:drawable/ic_input_add"
+        android:orderInCategory="1"
+        android:title="@string/new_brainstorm"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/logout"
         android:orderInCategory="60"
         android:title="@string/loggedmenu_logout" />

@@ -23,7 +23,6 @@ private const val TAG = "LOGIN_FRAGMENT"
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var user: UserClass? = null
     private var listener: OnLoginClicked? = null
 
@@ -56,12 +55,12 @@ class LoginFragment : Fragment() {
         } else {
             login_user_password.text.toString()
         }
-        val projection = arrayOf(User.Columns.LOGIN, User.Columns.PASSWORD)
+
         val selection = "${User.Columns.LOGIN} = ?"
         val selectionArgs = arrayOf(userLogin)
         val cursor = activity?.contentResolver?.query(
             User.CONTENT_URI,
-            projection,
+            null,
             selection,
             selectionArgs,
             null
@@ -69,12 +68,14 @@ class LoginFragment : Fragment() {
         if (cursor != null && userLogin != "???") {
             var foundLogin = ""
             var foundPassword = ""
+            var foundID = 0L
 
             cursor.use {
                 while (it.moveToNext()) {
                     with(it) {
-                        foundLogin = getString(0)
-                        foundPassword = getString(1)
+                        foundID = getLong(0)
+                        foundLogin = getString(1)
+                        foundPassword = getString(2)
                     }
                 }
                 Log.d(TAG, "loginUser: Found match $foundLogin and $foundPassword")
@@ -86,6 +87,7 @@ class LoginFragment : Fragment() {
                         // password matches, login this user.
                         Log.d(TAG, "Logging in user with login ${userLogin}")
                         val newUser = UserClass(userLogin, userPassword)
+                        newUser.id = foundID
                         val newFragment = LoggedFragment.newInstance(newUser)
                         activity?.supportFragmentManager?.beginTransaction()
                             ?.replace(R.id.main_fragment, newFragment)?.commit()
@@ -105,7 +107,6 @@ class LoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         Log.d(TAG, "onActivityCreated: starts")
         super.onActivityCreated(savedInstanceState)
-
         val actionBar = (listener as AppCompatActivity).supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
         loginButton.setOnClickListener {
