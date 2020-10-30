@@ -9,8 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.content_main.*
 
 private const val TAG = "MainActicity"
@@ -29,10 +27,6 @@ class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginF
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
         mTwoPane = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         Log.d(TAG, "onCreate: twoPane is $mTwoPane")
         val fragment = supportFragmentManager.findFragmentById(R.id.brainstorm_details_container)
@@ -47,6 +41,7 @@ class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginF
     }
 
     private fun showRegisterPane() {
+
         brainstorm_details_container.visibility = View.VISIBLE
         main_fragment.visibility = if (mTwoPane) View.VISIBLE else View.GONE
     }
@@ -104,9 +99,6 @@ class MainActivity : AppCompatActivity(), login_layout.OnRegisterClicked, LoginF
                     supportFragmentManager.findFragmentById(R.id.brainstorm_details_container)
                 removeRegisterPane(fragment)
             }
-
-
-
         }
         return super.onOptionsItemSelected(item)
 

@@ -11,7 +11,7 @@
     <string name="mainmenu_addUser">Register</string>
     <string name="mainmenu_showAbout">Show About</string>
     <string name="menutitle_generate">Generate Data</string>
-    <string name="no_user_message">No Brainstorms to Display</string>
+    <string name="no_user_message">No User Logged</string>
     <string name="no_login_user">No User Logged</string>
     <string name="no_brainstorm_text">There should be Brainstorm title</string>
     <!-- Strings related to login -->
@@ -39,4 +39,8 @@
     <string name="add_brainstorm_title">Title:</string>
     <string name="add_brainstorm_answers">Pass the number of answers to generate</string>
     <string name="add_brainstorm_addbutton">Add New Brainstorm</string>
+    <string name="title_activity_logged">LoggedActivity</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

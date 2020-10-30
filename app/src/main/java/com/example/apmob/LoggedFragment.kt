@@ -1,9 +1,6 @@
 package com.example.apmob
 
-import android.content.ContentResolver
-import android.content.ContentValues
-import android.content.res.Configuration
-import android.net.Uri
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,10 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.fragment_add_brainstorm.*
 import kotlinx.android.synthetic.main.fragment_logged.*
-import kotlinx.android.synthetic.main.fragment_main.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,13 +31,9 @@ class LoggedFragment : Fragment() {
         arguments?.let {
             user = it.getParcelable(ARG_PARAM1)
         }
-
         viewModel.cursor.observe(this, Observer { cursor -> mAdapter.swapCursor(cursor)?.close() })
 
     }
-
-
-
 
 
     override fun onCreateView(
@@ -57,6 +47,7 @@ class LoggedFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG,"onViewCreated:called")
         super.onViewCreated(view, savedInstanceState)
         user_login?.text = user?.login
         logged_brainstorm_list.layoutManager = LinearLayoutManager(context)
@@ -64,6 +55,7 @@ class LoggedFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        Log.d(TAG,"onCreateOptionsMenu:called")
         menu.clear()
         inflater.inflate(R.menu.logged_menu,menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -83,7 +75,8 @@ class LoggedFragment : Fragment() {
                 Log.d(TAG,"onOptionsItemSelected: user logging out")
                 val newFragment = AddBrainstorm.newInstance(user!!)
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.brainstorm_details_container, newFragment)?.commit()
+                    ?.replace(R.id.main_fragment, newFragment)?.commit()
+                //showAddingPane()
             }
 
             R.id.myBrainstorms ->{
@@ -100,9 +93,39 @@ class LoggedFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onAttach(context: Context) {
+        Log.d(TAG,"onAttach:called")
+        super.onAttach(context)
+    }
+    override fun onStart() {
+        Log.d(TAG, "onStart: called")
+        super.onStart()
+    }
 
+    override fun onResume() {
+        Log.d(TAG, "onResume: called")
+        super.onResume()
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.d(TAG, "onSaveInstanceState: called")
+        super.onSaveInstanceState(outState)
+    }
 
+    override fun onPause() {
+        Log.d(TAG, "onPause: called")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d(TAG, "onStop: called")
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Log.d(TAG, "onDestroy: called")
+        super.onDestroy()
+    }
 
     companion object {
         /**
@@ -122,4 +145,6 @@ class LoggedFragment : Fragment() {
                 }
             }
     }
+
+
 }

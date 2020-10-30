@@ -24,7 +24,7 @@ internal class AppDatabase private constructor(context: Context): SQLiteOpenHelp
         //CREATE TABLE Brainstorm(_id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, ownerID INTEGER, FOREIGN KEY(ownerID) REFERENCES user(_id));
         //CREATE TABLE user(_id INTEGER PRIMARY KEY NOT NULL, login TEXT NOT NULL, password TEXT NOT NULL);
         //CREATE TABLE IF NOT EXISTS Answers(_id INTEGER PRIMARY KEY NOT NULL, answer TEXT NOT NULL, bsID INTEGER NOT NULL, userID INTEGER,
-        // FOREIGN KEY(bsID) REFERANCES Brainstorm(_id), FOREIGN KEY(userID) REFERANCES user(_id);
+        // FOREIGN KEY(bsID) REFERENCES Brainstorm(_id), FOREIGN KEY(userID) REFERENCES user(_id);
         Log.d(TAG, "onCreate: starts")
         //create table user if not exists
         val sSQL = """CREATE TABLE IF NOT EXISTS ${User.TABLE_NAME} (${User.Columns.ID} INTEGER PRIMARY KEY NOT NULL, ${User.Columns.LOGIN} TEXT NOT NULL, ${User.Columns.PASSWORD} TEXT NOT NULL)""".replaceIndent(" ")

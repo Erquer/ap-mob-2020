@@ -1,6 +1,7 @@
 package com.example.apmob
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.register_layout.*
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +42,7 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
-    private fun loginUser() {
+    private fun loginUser() :Boolean {
         Log.d(TAG,"loginUser: called")
         //check if there is in database any user with given login, if not login user, else show message.
         val userLogin = if (login_user_login.text.isEmpty()) {
@@ -88,9 +88,11 @@ class LoginFragment : Fragment() {
                         Log.d(TAG, "Logging in user with login ${userLogin}")
                         val newUser = UserClass(userLogin, userPassword)
                         newUser.id = foundID
+                        user = newUser
                         val newFragment = LoggedFragment.newInstance(newUser)
                         activity?.supportFragmentManager?.beginTransaction()
                             ?.replace(R.id.main_fragment, newFragment)?.commit()
+                        return true
                     }
                     else -> {
                         // incorrect password. Show message
@@ -101,7 +103,7 @@ class LoginFragment : Fragment() {
             }
         }
 
-
+return false
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -110,7 +112,11 @@ class LoginFragment : Fragment() {
         val actionBar = (listener as AppCompatActivity).supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
         loginButton.setOnClickListener {
-            loginUser()
+            if(loginUser()){
+                val intent = Intent(activity,LoggedActivity::class.java)
+                intent.putExtra("userID",user!!.id)
+                startActivity(intent)
+            }
             listener?.onLoginClicked()
         }
 

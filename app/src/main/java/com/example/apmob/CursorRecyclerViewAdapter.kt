@@ -1,17 +1,15 @@
 package com.example.apmob
 
 import android.database.Cursor
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.user_brainstorms_items.*
-import java.lang.IllegalStateException
-import kotlin.math.log
 
 private const val TAG = "CURSOR_RECYCLER_ADAPT"
 
@@ -47,23 +45,29 @@ class BrainstormViewHolder(override val containerView: View):RecyclerView.ViewHo
             }
         }
         //populate listView with answers.
-        val adapter = ArrayAdapter(containerView.context, android.R.layout.simple_list_item_1, answersList)
-        answers.adapter = adapter
+
+        for(s in answersList){
+            val textView:TextView = TextView(containerView.context)
+            textView.text = s
+            textView.setTextColor(Color.BLACK)
+            answersLayout.addView(textView)
+        }
         login_owner.visibility = View.VISIBLE
-        answers.visibility = View.GONE
+        answersLayout.visibility = View.GONE
 
         showDetails.setOnClickListener {
             Log.d(TAG,"showDetails: clicked at ${brainstorm.title}")
-            if(answers.visibility == View.VISIBLE){
-                answers.visibility = View.GONE
+            if(answersLayout.visibility == View.VISIBLE){
+                answersLayout.visibility = View.GONE
             }else{
-                answers.visibility = View.VISIBLE
+                answersLayout.visibility = View.VISIBLE
             }
         }
         containerView.setOnLongClickListener {
-            Log.d(TAG,"onLongClick: cliced on ${brainstorm.title}")
+            Log.d(TAG,"onLongClick: clicked on ${brainstorm.title}")
             true
         }
+
     }
 
 }
@@ -83,7 +87,7 @@ class CursorRecyclerViewAdapter(private var cursor: Cursor?) : RecyclerView.Adap
             holder.login_owner.setText(R.string.Instruction_heading)
             holder.brainstorm_title.setText("To display any data there must be atleast one user to create Brainstorm, to do so click \"Register\" button and register user")
             holder.login_owner.visibility = View.GONE
-            holder.answers.visibility = View.GONE
+            holder.answersLayout.visibility = View.GONE
             holder.showDetails.visibility = View.GONE
         }else{
             if(!cursor.moveToPosition(position)){
@@ -100,8 +104,7 @@ class CursorRecyclerViewAdapter(private var cursor: Cursor?) : RecyclerView.Adap
             //Remember that ID isn't set in constructor
             brainstorm.id = cursor.getLong(cursor.getColumnIndex(Brainstorm.Columns.ID))
             holder.brainstorm_title.text = brainstorm.title
-            val text = "OwnerID = ${brainstorm.ownerID}"
-            //TODO: add and onClick fun
+
             holder.bind(brainstorm)
         }
 
