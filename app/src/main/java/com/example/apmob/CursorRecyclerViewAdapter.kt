@@ -54,7 +54,11 @@ class BrainstormViewHolder(override val containerView: View):RecyclerView.ViewHo
 
         showDetails.setOnClickListener {
             Log.d(TAG,"showDetails: clicked at ${brainstorm.title}")
-            answers.visibility = View.VISIBLE
+            if(answers.visibility == View.VISIBLE){
+                answers.visibility = View.GONE
+            }else{
+                answers.visibility = View.VISIBLE
+            }
         }
         containerView.setOnLongClickListener {
             Log.d(TAG,"onLongClick: cliced on ${brainstorm.title}")
