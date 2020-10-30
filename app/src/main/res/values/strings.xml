@@ -33,4 +33,6 @@
     <string name="loggedmenu_logout">Logout</string>
     <string name="loggedmenu_show_brainstorms">My Brainstorms</string>
     <string name="loggedmenu_all">All Brainstorms</string>
+    <string name="show_details_button">Details</string>
+    <string name="Instruction_heading">Instructions</string>
 </resources>

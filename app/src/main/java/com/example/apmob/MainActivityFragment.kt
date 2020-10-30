@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -16,6 +18,7 @@ import androidx.fragment.app.Fragment
 private const val TAG="MainActivityFragment"
 class MainActivityFragment : Fragment() {
 
+    private val mAdapter = CursorRecyclerViewAdapter(null)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +37,8 @@ class MainActivityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG,"onViewCreated: called")
         super.onViewCreated(view, savedInstanceState)
+        brainstorm_list.layoutManager = LinearLayoutManager(context)
+        brainstorm_list.adapter = mAdapter
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

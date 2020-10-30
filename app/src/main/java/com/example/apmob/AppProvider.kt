@@ -29,6 +29,7 @@ private const val PARTICIPATIONS_ID = 401
 
 val CONTENT_AUTHORITY_URI: Uri = Uri.parse("content://$CONTENT_AUTHORITY")
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class AppProvider : ContentProvider() {
 
     private val uriMatcher by lazy { buildUriMatcher() }
@@ -52,7 +53,7 @@ class AppProvider : ContentProvider() {
 
     override fun onCreate(): Boolean {
         Log.d(TAG, "onCreate: starts")
-//        val appDatabase = AppDatabase.getInstance(context)
+        val appDatabase = AppDatabase.getInstance(context!!)
         return true
     }
 
@@ -128,7 +129,7 @@ class AppProvider : ContentProvider() {
             else -> throw IllegalStateException("Unknown URI: $uri")
 
         }
-        val db = context?.let { AppDatabase.getInstance(it).readableDatabase }
+        val db = AppDatabase.getInstance(context!!).readableDatabase
         val cursor =
             queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder)
 
