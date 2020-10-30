@@ -90,6 +90,14 @@ class LoggedActivity : AppCompatActivity(),AddBrainstorm.OnAddBrainstormClicked 
                 Log.d(TAG,"onOptionsItemSelected: new Brainstorm clicked")
                 newBrainstormRequest(user)
             }
+            R.id.myBrainstorms ->{
+                Log.d(TAG,"onOptionsItemSelected: clicked")
+                //TODO in multiuser app option.
+            }
+            R.id.allBrainstorms ->{
+                Log.d(TAG,"onOptionsItemSelected: clicked")
+                //TODO in multiuser app option.
+            }
             android.R.id.home -> {
                 Log.d(TAG, "onOprionsItemSelected: home button pressed")
                 val fragment =
